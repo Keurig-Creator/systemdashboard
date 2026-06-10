@@ -6,7 +6,8 @@ jobs:
     container: docker:latest
     steps:
       - run: apk add --no-cache git
-      - run: git clone http://192.168.1.138:3000/david/systemdashboard.git . && git checkout ${{ github.sha }}
-      - run: docker build -t 192.168.1.138:3000/david/systemdashboard:latest .
-      - run: docker login -u david -p ${{ secrets.REGISTRY_TOKEN }} 192.168.1.138:3000
-      - run: docker push 192.168.1.138:3000/david/systemdashboard:latest
+      - run: git clone http://forgejo:3000/david/systemdashboard.git . && git checkout ${{ github.sha }}
+      - run: docker build -t forgejo:3000/david/systemdashboard:latest .
+      - run: docker login -u david -p ${{ secrets.REGISTRY_TOKEN }} forgejo:3000
+      - run: docker push forgejo:3000/david/systemdashboard:latest
+
