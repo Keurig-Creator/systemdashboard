@@ -12,14 +12,17 @@
 #          docker build -t 192.168.1.138:3000/david/systemdashboard:latest .
 #          docker login -u ${{ secrets.REGISTRY_USER }} -p ${{ secrets.REGISTRY_TOKEN }} 192.168.1.138:3000
 #          docker push 192.168.1.138:3000/david/systemdashboard:latest
-name: Test
+name: Build & Push Docker Image
 on: [push]
 jobs:
-  test:
+  build:
     runs-on: docker
     container: docker:latest
     steps:
-      - name: Test Docker
-        run: docker --version
-      - name: Hello World
-        run: echo "Hello from Forgejo Runner"
+      - uses: actions/checkout@v3
+      - name: Build image
+        run: docker build -t 192.168.1.138:3000/david/systemdashboard:latest .
+      - name: Push image
+        run: |
+          docker login -u david -p ${{ secrets.REGISTRY_TOKEN }} 192.168.1.138:3000
+          docker push 192.168.1.138:3000/david/systemdashboard:latest
