@@ -6,9 +6,9 @@ jobs:
     container: node:20-alpine
     steps:
       - name: Clone repo
-        run: git clone http://git.keurigsweb.com/david/systemdashboard.git . && git checkout ${{ github.sha }}
+        run: git clone http://192.168.1.138:3000/david/systemdashboard.git . && git checkout ${{ github.sha }}
       - name: Build image
-        run: docker build -t git.keurigsweb.com/david/systemdashboard:latest .
+        run: docker build -t 192.168.1.138:3000/david/systemdashboard:latest .
       - name: Push image
         run: |
           docker login -u david -p ${{ secrets.REGISTRY_TOKEN }} 192.168.1.138:3000
