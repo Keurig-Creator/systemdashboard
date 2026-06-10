@@ -3,9 +3,10 @@ on: [push]
 jobs:
   build:
     runs-on: docker
-    container: node:22-bookworm
+    container: docker:latest
     steps:
       - uses: actions/checkout@v3
+      - run: apk add --no-cache git
       - run: docker build -t 192.168.1.138:3000/david/systemdashboard:latest .
       - run: docker login -u david -p ${{ secrets.REGISTRY_TOKEN }} 192.168.1.138:3000
       - run: docker push 192.168.1.138:3000/david/systemdashboard:latest
